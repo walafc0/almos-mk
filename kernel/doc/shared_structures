@@ -1,0 +1,19 @@
+Shared structures are:
+At the process level:
+	-> File system (only matadata and data caches)
+	-> Task manager table
+	-> Task vm_region if we support inter process com (not the case in almos)
+
+	specific to ALMOS:
+	-> DQDT to allocate the approprite proc/mem ( can be avoided for now by directly using the
+	the task next_cluster field, and always redirecting the allocations to the local cluster)
+	-> 
+
+
+Efficient com with other proc:
+	- devellope physical access techniques at the software level
+		- fine grained at the C language level
+		- at the assemebler level, by inserting macro to switch space
+	- get some help from the hardware (put an paddr_extension for the stack (most important) and
+	  one for the instructions (secondary) )
+	

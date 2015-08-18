@@ -1,0 +1,597 @@
+1-Event Manager:
+The even manager has been changed in the fallowing ways :
+	- the API has been changed to avoid given a pointer to the second argumern to event_send we give only the 
+	the gpid of the target processor.
+	- local event handling is gloablly the same
+	- remote event has been changed. Must be carrefully handled with physical access:
+		- the kfifo of the remote cpu is physically accessed
+		- the event_notifier must notify after copying the event structure (on the stack ?). 
+			!!! This does not aplying that the pointer arguments are copied !!! 
+			=> modify event handler
+
+3-Processes/Thread Management
+
+	3.1) Task Management
+
+		There's one gloabal table that index all process by pid.
+		Replicaing the kernel will also replicate this structure...
+		The fatest way to corrdinate the replica : 
+			- Consiste of using the table of cluster 0 as the main table. Each table will contain
+			a pointer to the task structure if the task is local, other ways the table entry is 
+			either marked and contains the cluster id wich handle the task or a NULL value. 
+			A NULL value at the main table mean that the entry has not been allocated.
+			A NULL value in other table must be confirmed by cheching the main table.
+
+			This imply a change in pid allocate, wich must allocate from the main table by setting
+			the cluster id and marking the entry with a remote flag (0x1). // TODO more on synch
+		
+			The lookup need to check for the task in local, if we find a task address we return' it. 
+			If we find a remote entry we go to the indicate cluster. If the remote cluster does not contain 
+			the address of the task ...
+
+
+		Excuse me!  the fastest way is to directly use the main table as the only table and ignore other tables!!!
+		This will require putting a physical addresse on the table to point to task structures and synchronised 
+		with a lock.
+
+	3.2)Task descriptor
+
+	This structure contain the following structures that are shared between threads:
+		- vmm (Virtual Memory Manager) : see 2-.
+		- pointer to root/cwd file, fdinfo and binary file: use physical addresses
+		- pointer to task parent: use a parent cluster id field, or directly a physical addresse ?
+		- 2 list : one for the children and one for the siblings
+		- a signal manager (NULL par default ?)
+		- thread handling structures : 
+			- a table containing a reference to all the threads (and a pointer to it's page struct)
+			- a list entry root that englobe all thread: not really used, can be deleted
+		
+	How to manipulate these fields ? => by message passing ?
+	for thread's pointer we directly placed the ppn: thread's structures are aligned on a page.
+	Other pointers fd_info, bin are to locals strutures.
+	vmm handling is local if a single threaded task, otherwise the handling is done by message passing.
+
+	3.3) Thread Management
+	In the second stage...
+	
+		
+		
+2-Memory Management:
+	vmm: message passing to the processor that contain the main structure. 
+	There is no need to acess the thread data except for statistique pupose!
+	There is a part that could be done by the thread with passing a message... look in the page table part
+
+	To think : page fault at the same addresses how to avoid them (merge the messages of page fault) ?
+
+	kmem: all remote allocation are forbiden except for user pages (at least for now).
+	(user remote allocation have been done in the second stage.)
+
+
+3-Cluster Manager:
+	One cluster manager for each cluster: no need for the global table...no need for the replication of cluster addresses
+	...no needs for procs base addresses: the cpu_s are directly put into the cluster structures with the cluster base 
+	address the compiler will offset to the good addresse.
+
+
+3-DQDT:
+	initialisation has been modified to not require the remote allocation API. We set a table of two dqdt in the 
+
+
+
+4-Drivers
+
+
+
+
+5-Boot:
+	A) The main proc of the boot cluster enter the boot loader, initiliase the stack bases for
+	all other procs in the boot_tbl and wait for all other proc to copy the needed info (kernel, boot,
+	boot info) from the boot cluster.
+
+	B) All other procs enter the boot_loader allocate a stack a the end of the cluster ram and
+	wait for their cluster to be initilised by their main proc. (except for those of the boot cluster ?)
+
+	C) The main procs of other clusters enter the boot loader, set the sp register to point to
+	the stack at the end of the current cluster ram. 
+	(Enter the C code and) Copy the kernel/boot/boot_info from the main cluster to their cluster
+	increment a value  and sleep  back (wait instruction).
+
+	D) All procs sleep after incrementing a counter in the in the original BI (boot cluster).
+
+	E) Once the counter reach the number of proc, the main proc of the boot cluster can then
+	copy the kernel/boot/boot_info in the same cluster but at the correct adresses. This will erase the
+	code of the preloader. (the sp pointer of the boot cluster is good, the preloader should set it to
+	point
+
+	!!! moving the boot code is dangerous, since we are currently executing it ... and the
+	addreses in it are fixed ?!!! If we really want this space, we need to give up at this stage on the
+	boot code, BI can be kept.
+	
+	***********************************************************************************************************
+	Initital memory content at boot (TODO):
+
+	------------------ 0x0000 0000
+	Preloader
+	------------------ ENDPRELOADER
+	Kernel
+	------------------ END kernel paddr (important here, the charging addresse (paddr) is differente than vaddr)
+	BI
+	------------------
+	Boot code
+	------------------ End of boot
+	.....
+	------------------ end of cluster space - 4 boot stacks
+	Boot stacks (x nbproc)
+	----------------- End of cluster space
+
+	
+	Boot code role is to set:
+		1 - the kernel and boot info: deplace it to the address 0
+		2 - the stacks for each proc
+		3 - initialise the info structure (allocated on the stack): don't forget to put the BI info address
+			that resulted from displacing it.
+		4 - initialise the page table and the mmu if we are booting in virtual mode
+
+	***** Phase 1: boot proc of the boot cluster
+	- after the preloader, there's only the boot_proc who has a stack and all other proc are waiting (an WTI).
+	- jump to C code
+	- wakeup all proc (possible improvement: set a distributed wakeup)
+
+	***** Phase 2: all proc (the boot cluster proc)
+
+	- start by setting a stack at the end of current cluster
+	- jump to C code
+	- set info structure
+	- copy the kernel and BI info (only one proc per cluster) at the start of the current cluster 
+	(- set the page table and the mmu)
+	- jump to the kernel (of the cuurrent cluster) and wait in it ? yes wait for the
+	  kernel image of cluster 0 to be set (since we will probably synchronise with it)
+	  
+
+	? how to signal to the current cluster proc to jump to kernel ?
+
+	--> the boot code is now used by only the boot cluster
+	--> the preloader code is used by only the boot cluster other procs
+
+	***** Phase 3:
+	- put a barrier to be sure that all procs have entred the boot code
+	- all proc set their stack: to put after the boot proc stack
+	(- set the page table and the mmu)
+
+	--> the preloader code is no longer in use
+
+	- copy the kernel and BI of the boot cluster (by the boot proc)
+	- all proc of the boot cluster can now jump to the kernel and wait
+	- the boot proc enters the kernels and wake up a proc per cluster (except for the current
+	  boot cluster)
+
+	--> the boot code is no longer in use
+		
+
+	!! be careful the stack of all the procs are still in use !!
+	put the in the reserved zone ?
+
+	N.B.: all addresses of the boot cluster are found using compiled in variables
+
+
+	****** It's up to the kernel now...
+	
+Kernel boot:
+	***** Phase 1: only the boot proc
+	wake up one proc per cluster
+	!!! Must be sure that they are sleeping (waiting) ? !!!
+
+	***** Phase 2: A proc per cluster
+	Tasks: '->' indicate dependance
+
+	1) initialise task bootstap and task manager and set idle arg
+		reported: devfs/sysfs roots
+
+	2) initialise arch_memory : (initialise boot_tbl: done in the boot phase); initialise
+		clusters_tbl ?
+	initialise arch: initialise current cluster: initialise ppm (physical page memory) (can
+				alloc now!), cpu_init : event listener!
+			 initialise devices (printk) (put all in cluster devices lists, root all
+			interruptions locally (to the proc handling them)); 
+			 and register them (!!!to be reported!!!) -> depend on message api
+
+
+	3) --Barrier--: here we should wait that everybody has set there event listener.
+
+	only main proc of I/O cluster: initialise fs cache locally(?); 
+					initialise devfs/sysfs roots and set devices.
+	----Barier ?------
+
+
+	4) task_bootstarp_finalize :  should not be needed all should be done in task_init (TODO)
+	   kdmsg_init : a set of lock (isr, exception, printk)_lock  and printk_sync
+	
+	5) DQDT init: arch_dqdt_init and dqdt_init (TODO)
+
+	6) Forget about bootstrap_replicate_task and cluster_init_table 
+		a local cluster_init_cores is needed ?
+
+	register devices in fs ?
+	
+	**** Phase 3: all procs (thread idle)
+
+	set thread_idle for each proc (parrallèle ?)
+
+	load thread_idle: free reserved page (the boot loader reserved pages...), create the event
+				thread event manager, kvfsd only in the cluster_IO.
+
+
+	*** Phase 4: kvfsd (only main cpu of cluster IO)
+	
+	enable all irq.
+
+	initialise fs -> need __sys_blk
+	task load init require devfs file system
+	if failed set kminishell
+	
+
+
+
+
+
+
+
+
+Kernel Runing Modifications:
+
+	*** DQDT (Ressource handling): Must be set using physical addresses ?
+
+	*** FS support: Open, read, write ... all physical access or just when reaching the device ?
+
+	*** Memory support: when there is no multithreaded application (only kthread) the memory
+		management is all done localy. Cross cluster messaging for remote creation.
+
+	*** Task support: a replicated taskmanager, pids are now composed of XYN, X and Y are the
+		cluster offset, N is the offset in the current cluster. Remote creation can be done
+		only using message passing.
+
+	*** Device support:
+
+	*** Exception, Interruptions (not syscalls): all device interruptions are rooted and handled
+			locally, as configured at boot time.
+
+	Add cluster span to the arch config or in the cluster_entry. Yes it must be defined by the
+	boot code since this the code that decide the offset when using virtual memory.
+
+	*** User space support:
+		- Syscall: switch adressing mode in case we come or go from a syscall; save the coproc2 extend register	
+		- copy from/to user must be modified
+
+
+Developement process:
+	********** Phase one *******************
+	Consiste of boting the kernel with no user space support and with a dummy dqdt suport
+
+	*** Stage 0:
+		Rewrite the kernel in the view of passing to 40 bits:
+			Handle gloabal variables:
+			1) remove inused gloabl variables
+			2) simplifie the message passing API
+			3) do a simplified DQDT : replace dqdt files by a dummy : next_cluster++
+			4) task and thread creation only using message passing
+		   5) do a true copy_from_usr and copy_to_usr !
+		   6) delete the assumption that all address superior to KERNEL_OFFSET belongs 
+					 to the kernel(genarally used to verify if an address belongd to user space)
+					 replace by checking that the address is between USR_OFFSET and _LIMIT 
+					 (see libk/elf.c) for an example.
+			
+
+	*** Stage 1: 
+		Develloping boot code: require setting the disk, develloping virtual memory for
+			the perspective of a dooble mode of booting, replicate the kernel and put it
+			at address zero.
+		Develloping kernel boot code (reaching kern_init and printing a message ?), setting boot_dmsg 
+
+	*** Stage 2: (TODO: synchronise with stage 0)
+		Rewrite of most of the kernel:
+			******* GOALS:
+			1) delete (replace) reference to (unused) global variables: 
+				- cluster_tbl : no such a thing as cluster init...
+					reference to cluster struct should be removed to keep only cids: this will affect allot of code!
+					No more a access to remote listener ptr (event.c), nor cpu struct, not cluster, nor ppm of remote cluster ...
+
+				- devfs_db replaced by the root dentry/inode of the devfs file system and since
+				there is only one kernel that use it => allocate it dynamically
+				- similar for sysfs_root_entry ?
+				- devfs_n_op/devfs_f_op : are const 
+				- (dma,fb,icu,iopic,sda,timer,xicu,tty)_count are per cluster the
+				  new naming scheme is device_cidn
+				- rt_timer: Not used => removet it
+				- (exception, isr, printk, boot)_lock: are all used to lock the printing
+				- kexcept_tty, klog_tty, tty_tbl, kisr_tty, kboot_tty ???
+
+				- soclib_(any device)_driver are RO: can we mark them as const ?
+				- boot_stage_done: not used
+
+			2) Event Manager to use physical adresses.
+			3) fs
+			4) all interruption (produced by device and WTI) are handled locally
+			5) all exception are handled locally (there is no remote page fault, since
+				there is no user space => no multithreaded user space application)
+			6) Complete the kernel boot phase.
+			7) Context switch: adding the saving of the coproc registers: DATA_extend register and Virtual
+				mode register
+	?cpu_gid2ptr: should be modified to fetch only local cluster, if a remote cluster is called, it should return an error
+
+	*** Stage N: user space support
+		$27 is now used by the kerntry code! user space should no longer used it
+		Switch to user space need to modify to set off the MMU and reset when going back...
+		set in init context the mmu register value (0xF)
+
+***Structures modif (with study only struct fields)****
+
+** NOTATIONS:
+-PB: problem, 
+-HD: handled in the corresponding structure. This is for structure that are 
+directly embeded in the structure and wich contain a non local pointer
+-NPB: no problem
+-LPTR: local pointer
+-RPTR: remote pointer
+-RPTR-S: RPTR  that is static => point to a structure that cannot be moved across clusters  
+-RPTR-D: RPTR that is dynmic=> point to a structure that can be moved across clusters 
+(which mean that the  ptr need to be updated!)
+
+
+** Structures that need to accessed remotly (and does they need to be dynamic ?)
+struct task_s;
+struct thread_s;
+
+
+** Structures details
+
+	+ thread structure (thread.h)
+	struct thread_s
+	{
+		struct cpu_uzone_s uzone;//NOPB
+		spinlock_t lock;//PB:HD
+		thread_state_t state;//NOPB
+		...//NOPB
+		struct cpu_s *lcpu;//NOPB: LPTR   /*! pointer to the local CPU description structure */
+		struct sched_s *local_sched; //NOPB LPTR /*! pointer to the local scheduler structure */
+
+*		struct task_s *task; //PB: RPTR
+
+		thread_attr_t type;//NOPB           /*! 3 types : usr (PTHREAD), kernel (KTHREAD) or idle (TH_IDLE) */
+		struct cpu_context_s pws;//NOPB     /*! processor work state (register saved zone) */
+
+*		struct list_entry list;//PB       /*! next/pred threads at the same state */
+*		struct list_entry rope;//OB       /*! next/pred threads in the __rope list of thread */
+		struct thread_info info;//HD      /*! (exit value, statistics, ...) */
+
+		uint_t signature;//NOPB
+	};
+	struct thread_info
+	{
+		...//NOPB
+		struct cpu_s *ocpu;//PB: RPTR-S
+		uint_t wakeup_date;//NOPB           /*! wakeup date in seconds */
+		void *exit_value;//NOPB                  /*! exit value returned by thread or joined one */
+*		struct thread_s *join;//PB:RPTR-D              /*! points to waiting thread in join case */
+*		struct thread_s *waker;//RPTR-D
+		struct wait_queue_s wait_queue;//PB:HD
+*		struct wait_queue_s *queue;//PB
+		struct cpu_context_s pss;//NPB	    /*! Processor Saved State */
+		pthread_attr_t attr;//HD
+		void  *kstack_addr;//NPB:LPTR (always moved with the thread)
+		uint_t kstack_size;//OK
+		struct event_s *e_info;//never used!!!!!!!!!!!
+		struct page_s *page;//LTPR ?
+	};
+	typedef struct
+	{
+		...//NOPB
+		void *stack_addr;//user space ?
+		size_t stack_size;
+		void *entry_func;//USP                  /* mandatory */
+		void *exit_func;//USP                   /* mandatory */
+		void *arg1;//?
+		void *arg2;//?
+		void *sigreturn_func;//?
+		void *sigstack_addr;//USP todo
+		size_t sigstack_size;//?
+		struct sched_param  sched_param;//PPB
+		...//NOPB                        /* mandatory */
+	} pthread_attr_t;
+	
+	+ task structure
+	struct task_s
+	{
+		/* Various Locks */
+		mcs_lock_t block;//HD
+		spinlock_t lock;//HD
+		spinlock_t th_lock;//HD
+		struct rwlock_s cwd_lock;//HD
+		spinlock_t tm_lock;//local:HD
+
+		/* Memory Management */
+		struct vmm_s vmm;//HD
+
+		/* Placement Info */
+		struct cluster_s *cluster;//local
+		struct cpu_s *cpu;//local
+
+		/* File system *
+		//for cwd and root they should always point to the same 
+		//file struct (not node) to avoid ensurring the coherence
+		//if one of them change
+		struct vfs_inode_s *vfs_root;//
+		struct vfs_inode_s *vfs_cwd;//
+		struct fd_info_s  *fd_info;//embed it
+		struct vfs_file_s *bin;//Static: embed it
+	  
+		/* Task management */
+		pid_t pid;//NPB
+		uid_t uid;//NPB
+		gid_t gid;//NPB
+		uint_t state;//NPB
+		atomic_t childs_nr;//NPB
+		uint16_t childs_limit;//NPB
+
+		//make them of type faddr
+		struct task_s *parent;//PB
+		struct list_entry children;//PB 
+		struct list_entry list;//PB
+
+		/* Threads */
+		uint_t threads_count;
+		uint_t threads_nr;
+		uint_t threads_limit;
+		uint_t next_order;
+		uint_t max_order;
+
+		//add a function to register after we creat it ?
+		BITMAP_DECLARE(bitmap, (CONFIG_PTHREAD_THREADS_MAX >> 3));
+		struct thread_s **th_tbl;//PB: TODO: local table of pointer to avoid the page below?
+		struct list_entry th_root;
+		struct page_s *th_tbl_pg;//NPB: local (make it local)
+
+		/* Signal management */
+		struct sig_mgr_s sig_mgr;
+
+	#if CONFIG_FORK_LOCAL_ALLOC
+		struct cluster_s *current_clstr;
+	#endif
+	};
+
+		
+		
+	
+	
+File per file modif:
+	*** kern dir files:
+*PKB		- kern_init.c (see up)
+		- atomic.c: handle atomic_t and refcount_t objects (try to keep them local ? It will
+		  be hard (fs, event handler?))
+		- barrier.c: used only by sys_barrier.c
+		- blkio.c: this layer allow an fs to send request to block device, all request pass
+		  here.(manipulate a device struct. With this it's best to replicate the notion
+		  of device ? NO). Use blkio async to send an IPI blokio request.
+		- cluster.c : some init functions, cid2ptr (to delete ?), manager, key_op (never used)
+		- cond_var.c: used only by user space (at least for now)
+		- cpu.c : the function cpu_gid2ptr access the cluster structure! see the structure for more
+		- do_exec : use copy_uspace!
+		- do_interupt : remove thread migration handling ?
+		- do_syscall : (N.B. the context save is for the fork syscall) remove thread migration ?
+		- event : modify to support the ...
+		- (keysdb/kfifo/mwmr/mcs_sync/radix/rwlock/semaphore/spinlock).c: their modification depend on the scope in which their are used
+		- kthread_create: local
+		- rr-sched: should be local
+		- scheduler: (thread_local_cpu) should be local
+		- task.c: should get simplified => removing replicate calls (they should may be used to see how the migration goes)
+		- thread_create.c: use of cpu_gid2ptr, should be local
+		- destroy|dup|idle.c: should be local
+		- thread migrate.c: need to be modified
+	SYSCALLS
+	Miscelanious:
+		- sys_alarm.c: manipulte local data (And thread migration is initiated by each thread indepndantly...)
+*PKB		- sys_barier.c: not local, to complexe for no reason except performance, we should pospone this functionnality?
+				I think we need such a struc for the boot. This mean that posponing is not possible, but we can simplify it
+		- sys_clock.c: local
+		- sys_cond_var.c:
+		- sys_dma_memcpy.c:
+		- sys_rwlock.c
+		- sys_sem.c
+	Task:
+		- sys_exec.c
+		- sys_fork.c
+		- sys_getpid.c
+		- sys_ps.c
+		- sys_signal.c
+		- sys_thread_create.c
+		- sys_thread_detach.c
+		- sys_thread_exit.c
+		- sys_thread_getattr.c
+		- sys_thread_join.c
+		- sys_thread_migrate.c
+		- sys_thread_sleep.c
+		- sys_thread_wakeup.c
+		- sys_thread_yield.c
+	Task Mem:
+		- sys_madvise.c
+		- sys_mcntl.c
+		- sys_mmap.c
+		- sys_sbrk.c
+		- sys_utls.c
+	FS:
+		- sys_chdir.c:
+		- sys_close.c:
+		- sys_closedir.c:
+		- sys_creat.c:
+		- sys_getcwd.c
+		- sys_lseek.c
+		- sys_mkdir.c
+		- sys_mkfifo.c
+		- sys_open.c
+		- sys_opendir.c
+		- sys_pipe.c
+		- sys_read.c
+		- sys_readdir.c
+		- sys_stat.c
+		- sys_unlink.c
+		- sys_write.c
+	mm/:
+		Task related:
+		vmm.c: munmap (region:detach, split, resize); mmap (shared, private | file, anomymous); 
+			skbrk(resize heap region TODO: use the resize func), madvise_migrate, vmm_auto_migrate,
+			(modify page table attribute and set migrate flag), madvise_will_need;
+		vm_region.c:...
+		Other:
+		ppm.c: handle page descriptors. We find some use of cluster ptr that should be removed ?
+		page.c: to make local
+		
+		
+
+Question:
+1) How is the time handled in almos. Does we use a unique timer to keep the time seamleese across node ?
+2) Copy to/from userspace
+3) Cross cluster lists: thread lists
+4) Only the kentry is mapped when entring the kernel from user space... This is going to be a complexe point.
+Three new things need to be done:
+1- if from user space (or simply if we were in the vitual mode was actif), switch to physical mode of local cluster
+2- if from kernel save DATA_EXT register. Also, if we do cpy_uspace by switchin to the virtulle space, we need to 
+do what we do in one.
+
+
+Remark:
+cross cluster access also keep in mind that other access are possible, like page based access (temporarely map a page).
+
+
+
+
+Task and thread subsystems:
+Per cluster vmm or per thread ?
+
+Per cluster: 1) interest: less physical space cosummed and less coherence to handle
+	     2) Problems: "resharing" of the stack zone could complex (make it impossible to migrate the stack of thread and thus the thread) ?
+
+Per thread:  1) interest: virtualise the virtual mapping between thread become easy  (for stack and TLS)
+				and temporary mappping are allot easier...
+				(and we could free the $27 register!)
+	     2) Problems: to much use of physical space (cache) + require more coherence message
+
+
+
+Files need to accessible across cluster, since they could be share by tasks!
+
+
+
+TODO:
+Check that we have mapped enough of the kernel, for the kentry ?
+
+
+
+VMM replicated region (mapper) require that the insertion to the page cache be atomic!
+
+
+DEveloppement results:
+event_fifo.c
+remote operation.c
+arch_init.c:ongoing for devices
+cluster_init.c
+kentry.c:k1 is now used by the kernel! No, it's that we k1 only when we were in
+kernel mode... Otherwise when coming in usert mode we don't need it and save it?

@@ -1,0 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////
+//                          LICENCES RELATED NOTE                            //
+///////////////////////////////////////////////////////////////////////////////
+// This directory contains several libraries which constitute the user-land  //
+// of ALMOS operating system. The majority of them are taken from other open //
+// source projects and they have been adapted/ported/completed/configured    //
+// to run with the kernel of ALMOS. Each library has its own licence as it   //
+// is stated in its source-code, README, LICENCE or COPYRIGHT files.         //
+// These libraries and their licences are completely independant from the    //
+// licence of the kernel of ALMOS. The kernel of ALMOS has its own licence   //
+// (found in kernel/COPYRIGHT file) and it concerns only the kernel of ALMOS.//
+// Therefore, from this point of view, the kernel of ALMOS is an independent //
+// project that can be used (with respect of its licence) with other         //
+// compatible user-land environments of your choice (open-source or not).    //
+///////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,1612 @@
+
+iswalnum.c,47
+int __iswalnum_ascii(5,72
+int iswalnum(9,157
+
+strerror.c,126
+#define _BSD_SOURCE5,67
+#undef __attribute_dontuse__6,87
+#define __attribute_dontuse__7,116
+char*strerror(strerror12,206
+
+dietstdio.h,854
+#define BUFSIZE 11,165
+#define BUFSIZE 13,191
+struct __stdio_file 16,220
+  int fd;17,242
+  int flags;18,252
+  uint32_t bs;19,265
+  uint32_t bm;20,308
+  uint32_t buflen;21,348
+  char *buf;buf22,387
+  struct __stdio_file *next;next23,400
+  pid_t popen_kludge;24,446
+  unsigned char ungetbuf;25,468
+  char ungotten;26,494
+  pthread_mutex_t m;28,535
+#define ERRORINDICATOR 32,567
+#define EOFINDICATOR 33,592
+#define BUFINPUT 34,615
+#define BUFLINEWISE 35,634
+#define NOBUF 36,656
+#define STATICBUF 37,673
+#define FDPIPE 38,694
+#define CANREAD 39,712
+#define CANWRITE 40,732
+#define _IONBF 42,754
+#define _IOLBF 43,771
+#define _IOFBF 44,788
+struct arg_scanf 55,1097
+  void *data;data56,1116
+  int (*getch)getch57,1130
+  int (*putch)putch58,1153
+struct arg_printf 63,1259
+  void *data;data64,1279
+  int (*put)put65,1293
+
+wmemset.c,31
+wchar_t *wmemset(wmemset3,20
+
+fdglue2.c,92
+FILE*__stdio_init_file(__stdio_init_file13,200
+FILE* __stdio_init_file_nothreads(51,1151
+
+dietstring.h,236
+#define _DIET_STRING_H_2,24
+# define MKW(7,91
+# define STRALIGN(8,152
+# define MKW(10,250
+# define STRALIGN(11,287
+# define GFC(17,484
+# define INCSTR(18,511
+# define GFC(20,562
+# define INCSTR(21,608
+#define UNALIGNED(24,661
+
+chdir.c,18
+int chdir(26,895
+
+iprintf.c,50
+#define SIZE_OF_BUF 47,1564
+int iprintf 48,1587
+
+fprintf.c,18
+int fprintf(6,79
+
+sprintf.c,18
+int sprintf(6,79
+
+mbrtowc.c,53
+static mbstate_t internal;5,63
+size_t mbrtowc(7,91
+
+fopen.c,70
+FILE *fopen_unlocked(fopen_unlocked11,202
+FILE *fopen(fopen22,469
+
+fputc_unlocked.c,43
+int fputc_unlocked(5,64
+int fputc(35,817
+
+errlistu.c,36
+const char  __sys_err_unknown 5,44
+
+islower.c,45
+int __islower_ascii 4,52
+int islower 8,132
+
+rand_r.c,91
+#define	M	13,247
+#define	A	14,271
+#define	Q	15,287
+#define	R	16,311
+int rand_r(20,388
+
+fcntl.h,25
+#define _FCNTL_H_23,846
+
+time.h,55
+#define _TIME_H_24,846
+#define CLOCKS_PER_SEC 28,884
+
+sleep.c,54
+unsigned int __attribute__ ((noinline)) sleep 28,951
+
+creat.c,45
+int __attribute__ ((noinline)) creat(26,894
+
+memset.c,28
+void *memset memset24,849
+
+iswprint.c,47
+int __iswprint_ascii(4,53
+int iswprint(8,138
+
+fseeko.c,45
+int fseeko_unlocked(4,44
+int fseeko(12,279
+
+wctype.c,165
+struct { const char* name;4,41
+struct { const char* name; wctype_t func;4,41
+struct { const char* name; wctype_t func; } types[types4,41
+wctype_t wctype(19,401
+
+wcsstr.c,29
+wchar_t *wcsstr(wcsstr3,20
+
+dirent.h,633
+#define _DIRENT_H_23,847
+#define _DIRENT_HAVE_D_TYPE28,907
+#define _DIRENT_HAVE_D_SIZE29,935
+#define _BSD_SOURCE32,984
+  DT_REG 37,1019
+  DT_DIR 38,1034
+  DT_FIFO 39,1049
+  DT_FIFO = 0x20,x2039,1049
+  DT_SOCK,40,1067
+  DT_CHR 41,1078
+  DT_CHR = 0x40,x4041,1078
+  DT_BLK 42,1095
+  DT_BLK = 0x80,x8042,1095
+  DT_UNKNOWN43,1112
+typedef uint32_t ino_t;46,1129
+struct dirent 48,1154
+  ino_t          d_ino;49,1170
+  size_t         d_size;50,1226
+  unsigned char  d_type;51,1278
+  char           d_name[d_name52,1304
+typedef struct libc_dir_s55,1343
+  int fd;57,1371
+  struct dirent entry;58,1381
+} DIR;59,1404
+
+isgraph.c,45
+int __isgraph_ascii 2,32
+int isgraph 6,116
+
+__ltostr.c,19
+int __ltostr(4,41
+
+fputs.c,42
+int fputs_unlocked(4,44
+int fputs(8,142
+
+iswalpha.c,47
+int __iswalpha_ascii(5,72
+int iswalpha(9,157
+
+freopen.c,78
+FILE *freopen_unlocked(freopen_unlocked10,193
+FILE *freopen(freopen29,753
+
+mbsrtowcs.c,23
+size_t mbsrtowcs(3,20
+
+isdigit.c,45
+int __isdigit_ascii 4,52
+int isdigit 8,131
+
+assert.h,282
+#define _ASSERT_H2,18
+#define __ASSERT_FUNCTION 6,65
+#   define __ASSERT_FUNCTION	9,179
+#   define __ASSERT_FUNCTION	11,225
+#undef assert15,290
+#define assert(17,318
+extern void __assert_fail 22,444
+void __assert_fail 28,630
+# define assert(36,876
+# define assert(41,1059
+
+puts.c,64
+int __stdio_outs(6,90
+int __stdio_outs(7,156
+int puts(12,252
+
+isspace.c,45
+int __isspace_ascii 4,52
+int isspace 9,143
+
+abs.c,30
+int abs(4,41
+long labs(6,99
+
+btowc.c,19
+wint_t btowc(4,44
+
+fgets.c,67
+char *fgets_unlocked(fgets_unlocked3,24
+char*fgets(fgets28,466
+
+strcspn.c,21
+size_t strcspn(4,40
+
+vfscanf.c,19
+int vfscanf(7,103
+
+strtof.c,19
+float strtof(5,60
+
+memmove.c,81
+#define _POSIX_SOURCE1,0
+#define _XOPEN_SOURCE2,22
+void *memmove(memmove6,84
+
+wcschr.c,22
+wchar_t* wcschr(3,20
+
+strstr.c,26
+char *strstr(strstr4,40
+
+stdlib.h,664
+#define _STDLIB_H2,18
+#define alloca(9,99
+typedef unsigned short randbuf[randbuf38,992
+int abs(52,1469
+long int labs(53,1512
+long long int llabs(54,1566
+#define EXIT_FAILURE 57,1633
+#define EXIT_SUCCESS 58,1656
+#define RAND_MAX 60,1680
+#define MB_CUR_MAX 62,1710
+typedef struct { int quot,67,1849
+typedef struct { int quot,rem;67,1849
+typedef struct { int quot,rem; } div_t;67,1849
+typedef struct { long quot,68,1889
+typedef struct { long quot,rem;68,1889
+typedef struct { long quot,rem; } ldiv_t;68,1889
+typedef struct { long long quot,74,2042
+typedef struct { long long quot,rem;74,2042
+typedef struct { long long quot,rem; } lldiv_t;74,2042
+
+stdint.h,1009
+#define _STDINT_H_23,847
+typedef signed char int8_t;26,899
+typedef unsigned char uint8_t;27,927
+typedef signed short int int16_t;29,959
+typedef unsigned short int uint16_t;30,993
+typedef signed int int32_t;32,1031
+typedef unsigned int uint32_t;33,1059
+typedef signed long long int int64_t;35,1091
+typedef unsigned long long int uint64_t;36,1129
+typedef uint32_t uintptr_t;39,1225
+typedef int32_t int_fast8_t;42,1306
+typedef uint32_t uint_fast8_t;43,1335
+typedef int32_t int_fast16_t;45,1367
+typedef uint32_t uint_fast16_t;46,1397
+typedef int32_t int_fast32_t;48,1430
+typedef uint32_t uint_fast32_t;49,1460
+typedef int64_t int_fast64_t;51,1493
+typedef uint64_t uint_fast64_t 52,1523
+typedef uint32_t size_t;55,1608
+typedef int32_t ssize_t;56,1633
+#define INT8_MIN 59,1697
+#define INT16_MIN 60,1727
+#define INT32_MIN 61,1761
+#define INT8_MAX 64,1842
+#define INT16_MAX 65,1871
+#define INT32_MAX 66,1902
+#define UINT8_MAX 69,1982
+#define UINT16_MAX 70,2011
+#define UINT32_MAX 71,2042
+
+wchar.h,271
+#define _WCHAR_H2,17
+typedef __WINT_TYPE__ wint_t;9,122
+typedef unsigned int wint_t;11,158
+typedef int (*wctype_t)wctype_t13,194
+#define WCHAR_MIN 16,273
+#define WCHAR_MAX 17,309
+#define WEOF 20,360
+  int count;24,410
+  wchar_t sofar;25,423
+} mbstate_t;26,440
+
+towlower.c,22
+wint_t towlower(3,21
+
+strtok.c,67
+static char *strtok_pos;strtok_pos3,21
+char *strtok(strtok5,47
+
+strxfrm.c,21
+size_t strxfrm(5,66
+
+ffs.c,14
+int ffs(3,22
+
+ftello.c,49
+off_t ftello_unlocked(4,44
+off_t ftello(10,209
+
+qsort.c,73
+static void exch(3,21
+static void quicksort(17,377
+void qsort(37,1069
+
+fseek.c,43
+int fseek_unlocked(4,44
+int fseek(12,292
+
+vsprintf.c,20
+int vsprintf(7,104
+
+clearerr.c,50
+void clearerr_unlocked(3,24
+void clearerr(7,115
+
+fileno.c,43
+int fileno_unlocked(3,24
+int fileno(6,82
+
+putchar.c,38
+#undef putchar3,20
+int putchar(4,35
+
+wcsncpy.c,23
+wchar_t* wcsncpy(3,20
+
+wctomb.c,17
+int wctomb(4,40
+
+perror.c,117
+#define _BSD_SOURCE6,86
+#undef __attribute_dontuse__7,106
+#define __attribute_dontuse__8,135
+void  perror 13,227
+
+tolower.c,18
+int tolower(3,20
+
+unlink.c,46
+int __attribute__ ((noinline)) unlink(26,895
+
+iswblank.c,47
+int __iswblank_ascii(4,53
+int iswblank(8,123
+
+_crt0.c,63
+static void __attribute__ ((section (".init"))) _start(29,959
+
+dietlocale.h,60
+extern enum __encoding 1,0
+  CT_8BIT,2,25
+  CT_UTF8,3,36
+
+isalnum.c,18
+int isalnum(3,20
+
+strlen.c,141
+size_t strlen(7,123
+typedef uint64_t	word_t;17,264
+typedef uint32_t	word_t;19,312
+static word_t const	magic 24,381
+size_t strlen(26,443
+
+strchr.c,52
+char *strchr(strchr4,47
+char *index(index19,403
+
+toupper.c,25
+inline int toupper(3,20
+
+lseek.c,47
+off_t __attribute__ ((noinline)) lseek(26,895
+
+mbtowc.c,17
+int mbtowc(4,40
+
+rand.c,103
+static unsigned int seed=3,21
+int rand(5,50
+void srand(9,94
+int random(11,134
+void srandom(12,183
+
+vprintf.c,67
+int __stdio_outs(5,64
+int __stdio_outs(6,130
+int vprintf(10,223
+
+memcmp.c,35
+int memcmp(6,176
+int bcmp(20,440
+
+md5.h,139
+#define _MD5_H24,947
+  uint32_t state[state35,1153
+  uint32_t count[count36,1199
+  uint8_t  buffer[buffer37,1283
+} MD5_CTX;38,1356
+
+string.h,100
+#define _STRING_H2,18
+#define strerror 55,1381
+#define strdupa(66,1699
+#define strndupa(67,1803
+
+isblank.c,18
+int isblank 3,20
+
+strcat.c,19
+char* strcat(4,47
+
+errno.h,3521
+#define _ERRNO_H_2,18
+#define EPERM	4,37
+#define ENOENT	5,85
+#define ESRCH	6,136
+#define EINTR	7,176
+#define EIO	8,224
+#define ENXIO	9,256
+#define E2BIG	10,306
+#define ENOEXEC	11,348
+#define EBADF	12,392
+#define ECHILD	13,432
+#define EAGAIN	14,476
+#define ENOMEM	15,511
+#define EACCES	16,550
+#define EFAULT	17,593
+#define ENOTBLK	18,630
+#define EBUSY	19,678
+#define EEXIST	20,726
+#define EXDEV	21,763
+#define ENODEV	22,805
+#define ENOTDIR	23,845
+#define EISDIR	24,887
+#define EINVAL	25,927
+#define ENFILE	26,969
+#define EMFILE	27,1014
+#define ENOTTY	28,1059
+#define ETXTBSY	29,1101
+#define EFBIG	30,1142
+#define ENOSPC	31,1181
+#define ESPIPE	32,1230
+#define EROFS	33,1268
+#define EMLINK	34,1314
+#define EPIPE	35,1354
+#define EDOM	36,1390
+#define ERANGE	37,1449
+#define EDEADLK	38,1504
+#define ENAMETOOLONG	39,1560
+#define ENOLCK	40,1609
+#define ENOSYS	41,1660
+#define ENOTEMPTY	42,1710
+#define ELOOP	43,1757
+#define EWOULDBLOCK	44,1817
+#define ENOMSG	45,1872
+#define EIDRM	46,1924
+#define ECHRNG	47,1967
+#define EL2NSYNC	48,2020
+#define EL3HLT	49,2071
+#define EL3RST	50,2111
+#define ELNRNG	51,2150
+#define EUNATCH	52,2200
+#define ENOCSI	53,2255
+#define EL2HLT	54,2307
+#define EBADE	55,2347
+#define EBADR	56,2388
+#define EXFULL	57,2439
+#define ENOANO	58,2478
+#define EBADRQC	59,2512
+#define EBADSLT	60,2559
+#define EDEADLOCK	61,2598
+#define EBFONT	62,2660
+#define ENOSTR	63,2706
+#define ENODATA	64,2751
+#define ETIME	65,2795
+#define ENOSR	66,2833
+#define ENONET	67,2882
+#define ENOPKG	68,2937
+#define EREMOTE	69,2984
+#define ENOLINK	70,3027
+#define EADV	71,3075
+#define ESRMNT	72,3114
+#define ECOMM	73,3153
+#define EPROTO	74,3205
+#define EMULTIHOP	75,3245
+#define EDOTDOT	76,3291
+#define EBADMSG	77,3336
+#define EOVERFLOW	78,3381
+#define ENOTUNIQ	79,3446
+#define EBADFD	80,3499
+#define EREMCHG	81,3553
+#define ELIBACC	82,3602
+#define ELIBBAD	83,3667
+#define ELIBSCN	84,3730
+#define ELIBMAX	85,3788
+#define ELIBEXEC	86,3862
+#define EILSEQ	87,3926
+#define ERESTART	88,3973
+#define ESTRPIPE	89,4043
+#define EUSERS	90,4088
+#define ENOTSOCK	91,4128
+#define EDESTADDRREQ	92,4185
+#define EMSGSIZE	93,4244
+#define EPROTOTYPE	94,4287
+#define ENOPROTOOPT	95,4346
+#define EPROTONOSUPPORT	96,4398
+#define ESOCKTNOSUPPORT	97,4454
+#define EOPNOTSUPP	98,4513
+#define ENOTSUP	99,4587
+#define EPFNOSUPPORT	100,4667
+#define EAFNOSUPPORT	101,4727
+#define EADDRINUSE	102,4798
+#define EADDRNOTAVAIL	103,4849
+#define ENETDOWN	104,4912
+#define ENETUNREACH	105,4955
+#define ENETRESET	106,5008
+#define ECONNABORTED	107,5080
+#define ECONNRESET	108,5144
+#define ENOBUFS	109,5198
+#define EISCONN	110,5251
+#define ENOTCONN	111,5318
+#define ESHUTDOWN	112,5381
+#define ETOOMANYREFS	113,5455
+#define ETIMEDOUT	114,5521
+#define ECONNREFUSED	115,5570
+#define EHOSTDOWN	116,5620
+#define EHOSTUNREACH	117,5661
+#define EALREADY	118,5709
+#define EINPROGRESS	119,5766
+#define ESTALE	120,5822
+#define EUCLEAN	121,5870
+#define ENOTNAM	122,5922
+#define ENAVAIL	123,5977
+#define EISNAM	124,6034
+#define EREMOTEIO	125,6081
+#define EDQUOT	126,6126
+#define EUNKNOWN 127,6167
+#define EBADBLK 128,6215
+#define EEODIR 129,6263
+#define ENOTSUPPORTED 130,6314
+#define	ENOKEY	131,6383
+#define	EKEYEXPIRED	132,6436
+#define	EKEYREVOKED	133,6482
+#define	EKEYREJECTED	134,6533
+#define ENOMEDIUM	135,6592
+#define EMEDIUMTYPE	136,6636
+#define	ECANCELED	137,6684
+#define __SYS_NERR 138,6731
+#define errno 147,6838
+#define __set_errno(152,6919
+
+ldiv.c,18
+ldiv_t ldiv(3,21
+
+wcscat.c,22
+wchar_t* wcscat(3,20
+
+strtold.c,26
+long double strtold(5,60
+
+fwrite.c,53
+size_t fwrite_unlocked(7,102
+size_t fwrite(63,1582
+
+crypt.c,661
+static const char IP[IP6,91
+static const char FP[FP18,375
+static const char PC1_C[PC1_C32,760
+static const char PC1_D[PC1_D39,889
+static const char shifts[shifts47,1070
+static const char PC2_C[PC2_C53,1240
+static const char PC2_D[PC2_D58,1373
+static char C[C65,1568
+static char D[D66,1587
+static char KS[KS68,1654
+static char E[E71,1712
+static const char e2[e272,1731
+void setkey(80,2005
+static const char S[S123,2990
+static const char P[P182,4870
+static char L[L188,5055
+#define R 189,5074
+static char tempL[tempL190,5091
+static char f[f191,5114
+static char preS[preS194,5200
+void encrypt(197,5258
+char * crypt(255,6962
+
+setjmp.h,128
+#define _SETJMP_H_23,843
+typedef struct __jmp_buffer_s jmp_buf[jmp_buf31,947
+#define setjmp(33,990
+#define longjmp(34,1036
+
+strrchr.c,56
+char *strrchr(strrchr4,47
+char *rindex(rindex20,441
+
+__lltostr.c,21
+int __lltostr(5,101
+
+fdprintf.c,19
+int fdprintf(6,79
+
+wcscmp.c,36
+int wcscmp(3,20
+int wcscoll(9,130
+
+isupper.c,45
+int __isupper_ascii 4,52
+int isupper 9,131
+
+iscntrl.c,45
+int __iscntrl_ascii 4,52
+int iscntrl 8,138
+
+abort.c,18
+void abort(7,105
+
+stat.h,56
+#define _STAT_H_23,845
+typedef uint32_t mode_t;27,883
+
+limits.h,1335
+#define _LIMITS_H2,18
+#define __SCHAR_MAX__ 7,80
+#define __SHRT_MAX__ 10,136
+#define __INT_MAX__ 13,193
+#define __LONG_MAX__ 17,277
+#define __LONG_MAX__ 19,328
+#define CHAR_BIT 23,379
+#define SCHAR_MIN 25,399
+#define SCHAR_MAX 26,440
+#define UCHAR_MAX 27,480
+#undef CHAR_MIN30,550
+#define CHAR_MIN 31,566
+#undef CHAR_MAX32,585
+#define CHAR_MAX 33,601
+#undef CHAR_MIN35,634
+#define CHAR_MIN 36,650
+#undef CHAR_MAX37,677
+#define CHAR_MAX 38,693
+#define SHRT_MIN 41,728
+#define SHRT_MAX 42,768
+#define USHRT_MAX 44,845
+#define USHRT_MAX 46,896
+#define INT_MIN 49,947
+#define INT_MAX 50,986
+#define UINT_MAX 51,1024
+#define LONG_MIN 53,1069
+#define LONG_MAX 54,1110
+#define ULONG_MAX 55,1156
+#define LLONG_MAX 57,1204
+#define LLONG_MIN 58,1244
+#define ULLONG_MAX 61,1358
+#define SSIZE_MIN 63,1402
+#define SSIZE_MAX 64,1429
+#define PASS_MAX	66,1457
+#define NR_OPEN	68,1479
+#define NGROUPS_MAX	70,1502
+#define ARG_MAX	71,1568
+#define CHILD_MAX	72,1635
+#define OPEN_MAX 74,1737
+#define LINK_MAX	75,1789
+#define MAX_CANON	76,1840
+#define MAX_INPUT	77,1902
+#define NAME_MAX	79,2010
+#define PATH_MAX	80,2051
+#define PIPE_BUF	82,2159
+#define RTSIG_MAX	84,2215
+#define LINE_MAX	86,2237
+#define ATEXIT_MAX 87,2259
+#define _POSIX_PATH_MAX 90,2313
+#define MB_LEN_MAX 91,2346
+#define IOV_MAX 94,2390
+
+swab.c,16
+void swab(3,21
+
+tmpfile.c,77
+FILE *tmpfile_unlocked(tmpfile_unlocked9,175
+FILE *tmpfile(tmpfile18,371
+
+ftell.c,45
+long ftell_unlocked(5,63
+long ftell(14,304
+
+open.c,17
+int open(28,932
+
+atoi.c,15
+int atoi(6,81
+
+memmem.c,51
+#define _GNU_SOURCE 1,0
+void *memmem(memmem5,63
+
+wmemcmp.c,18
+int wmemcmp(3,20
+
+dma_memcpy.c,97
+static void* __attribute__ ((noinline)) _dma_memcpy 28,949
+void *dma_memcpy dma_memcpy39,1140
+
+div.c,16
+div_t div(4,46
+
+atol.c,65
+long int atol(5,60
+long long int atoll(20,354
+int atoi(22,427
+
+strtoul.c,32
+unsigned long int strtoul(6,79
+
+strtoull.c,108
+unsigned long long int strtoull(7,101
+unsigned long long int strtouq(60,1300
+uintmax_t strtoumax(63,1412
+
+rand48.c,354
+static randbuf rand48buf;3,21
+#define A_0 4,47
+#define A_1 5,67
+#define A_2 6,87
+#define C 7,104
+static randbuf a 8,118
+static unsigned short c 9,156
+static void calc_next(11,186
+long lrand48(28,560
+long mrand48(32,612
+void srand48(36,664
+unsigned short *seed48(seed4846,834
+void lcong48(60,1066
+long jrand48(69,1212
+long nrand48(76,1314
+
+pipe.c,17
+int pipe(26,895
+
+inttypes.h,4862
+#define _INTTYPES_H2,20
+#  define __PRI64_PREFIX	7,84
+#  define __PRIPTR_PREFIX	8,113
+#  define __PRI64_PREFIX	10,150
+#  define __PRIPTR_PREFIX11,180
+# define PRId8	17,287
+# define PRId16	18,307
+# define PRId32	19,328
+# define PRId64	20,349
+# define PRIdLEAST8	22,386
+# define PRIdLEAST16	23,410
+# define PRIdLEAST32	24,435
+# define PRIdLEAST64	25,460
+# define PRIdFAST8	27,501
+# define PRIdFAST16	28,524
+# define PRIdFAST32	29,548
+# define PRIdFAST64	30,572
+# define PRIi8	33,613
+# define PRIi16	34,633
+# define PRIi32	35,654
+# define PRIi64	36,675
+# define PRIiLEAST8	38,712
+# define PRIiLEAST16	39,736
+# define PRIiLEAST32	40,761
+# define PRIiLEAST64	41,786
+# define PRIiFAST8	43,827
+# define PRIiFAST16	44,850
+# define PRIiFAST32	45,874
+# define PRIiFAST64	46,898
+# define PRIo8	49,961
+# define PRIo16	50,981
+# define PRIo32	51,1002
+# define PRIo64	52,1023
+# define PRIoLEAST8	54,1060
+# define PRIoLEAST16	55,1084
+# define PRIoLEAST32	56,1109
+# define PRIoLEAST64	57,1134
+# define PRIoFAST8	59,1175
+# define PRIoFAST16	60,1198
+# define PRIoFAST32	61,1222
+# define PRIoFAST64	62,1246
+# define PRIu8	65,1312
+# define PRIu16	66,1332
+# define PRIu32	67,1353
+# define PRIu64	68,1374
+# define PRIuLEAST8	70,1411
+# define PRIuLEAST16	71,1435
+# define PRIuLEAST32	72,1460
+# define PRIuLEAST64	73,1485
+# define PRIuFAST8	75,1526
+# define PRIuFAST16	76,1549
+# define PRIuFAST32	77,1573
+# define PRIuFAST64	78,1597
+# define PRIx8	81,1676
+# define PRIx16	82,1696
+# define PRIx32	83,1717
+# define PRIx64	84,1738
+# define PRIxLEAST8	86,1775
+# define PRIxLEAST16	87,1799
+# define PRIxLEAST32	88,1824
+# define PRIxLEAST64	89,1849
+# define PRIxFAST8	91,1890
+# define PRIxFAST16	92,1913
+# define PRIxFAST32	93,1937
+# define PRIxFAST64	94,1961
+# define PRIX8	97,2040
+# define PRIX16	98,2060
+# define PRIX32	99,2081
+# define PRIX64	100,2102
+# define PRIXLEAST8	102,2139
+# define PRIXLEAST16	103,2163
+# define PRIXLEAST32	104,2188
+# define PRIXLEAST64	105,2213
+# define PRIXFAST8	107,2254
+# define PRIXFAST16	108,2277
+# define PRIXFAST32	109,2301
+# define PRIXFAST64	110,2325
+# define PRIdMAX	114,2421
+# define PRIiMAX	115,2457
+# define PRIoMAX	116,2493
+# define PRIuMAX	117,2529
+# define PRIxMAX	118,2565
+# define PRIXMAX	119,2601
+# define PRIdPTR	123,2694
+# define PRIiPTR	124,2731
+# define PRIoPTR	125,2768
+# define PRIuPTR	126,2805
+# define PRIxPTR	127,2842
+# define PRIXPTR	128,2879
+# define SCNd8	134,2997
+# define SCNd16	135,3019
+# define SCNd32	136,3041
+# define SCNd64	137,3062
+# define SCNdLEAST8	139,3099
+# define SCNdLEAST16	140,3125
+# define SCNdLEAST32	141,3151
+# define SCNdLEAST64	142,3176
+# define SCNdFAST8	144,3217
+# define SCNdFAST16	145,3242
+# define SCNdFAST32	146,3282
+# define SCNdFAST64	147,3322
+# define SCNi8	150,3394
+# define SCNi16	151,3416
+# define SCNi32	152,3438
+# define SCNi64	153,3459
+# define SCNiLEAST8	155,3496
+# define SCNiLEAST16	156,3522
+# define SCNiLEAST32	157,3548
+# define SCNiLEAST64	158,3573
+# define SCNiFAST8	160,3614
+# define SCNiFAST16	161,3639
+# define SCNiFAST32	162,3679
+# define SCNiFAST64	163,3719
+# define SCNu8	166,3793
+# define SCNu16	167,3815
+# define SCNu32	168,3837
+# define SCNu64	169,3858
+# define SCNuLEAST8	171,3895
+# define SCNuLEAST16	172,3921
+# define SCNuLEAST32	173,3947
+# define SCNuLEAST64	174,3972
+# define SCNuFAST8	176,4013
+# define SCNuFAST16	177,4038
+# define SCNuFAST32	178,4078
+# define SCNuFAST64	179,4118
+# define SCNo8	182,4181
+# define SCNo16	183,4203
+# define SCNo32	184,4225
+# define SCNo64	185,4246
+# define SCNoLEAST8	187,4283
+# define SCNoLEAST16	188,4309
+# define SCNoLEAST32	189,4335
+# define SCNoLEAST64	190,4360
+# define SCNoFAST8	192,4401
+# define SCNoFAST16	193,4426
+# define SCNoFAST32	194,4466
+# define SCNoFAST64	195,4506
+# define SCNx8	198,4575
+# define SCNx16	199,4597
+# define SCNx32	200,4619
+# define SCNx64	201,4640
+# define SCNxLEAST8	203,4677
+# define SCNxLEAST16	204,4703
+# define SCNxLEAST32	205,4729
+# define SCNxLEAST64	206,4754
+# define SCNxFAST8	208,4795
+# define SCNxFAST16	209,4820
+# define SCNxFAST32	210,4860
+# define SCNxFAST64	211,4900
+# define SCNdMAX	215,4996
+# define SCNiMAX	216,5032
+# define SCNoMAX	217,5068
+# define SCNuMAX	218,5104
+# define SCNxMAX	219,5140
+# define SCNdPTR	222,5232
+# define SCNiPTR	223,5269
+# define SCNoPTR	224,5306
+# define SCNuPTR	225,5343
+# define SCNxPTR	226,5380
+typedef int int16_t 230,5505
+typedef int int32_t 234,5628
+typedef unsigned int uint16_t 238,5748
+typedef unsigned int uint32_t 242,5881
+typedef signed long int64_t;247,5976
+typedef unsigned long uint64_t;248,6005
+typedef signed long int intmax_t;249,6037
+typedef unsigned long int uintmax_t;250,6071
+typedef signed long long int intmax_t;252,6114
+typedef unsigned long long int uintmax_t;253,6153
+
+mbstowcs.c,22
+size_t mbstowcs(4,40
+
+setvbuf.c,77
+static int set_flags(7,108
+int setvbuf_unlocked(17,462
+int setvbuf(37,950
+
+memory.h,23
+#define _MEMORY_H2,18
+
+strcmp.c,35
+strcmp 7,156
+int strcoll(50,1175
+
+close.c,18
+int close 26,895
+
+iswpunct.c,47
+int __iswpunct_ascii(4,53
+int iswpunct(9,144
+
+wcwidth.c,44
+#define _XOPEN_SOURCE1,0
+int wcwidth(4,42
+
+getcwd.c,49
+char * __attribute__ ((noinline)) getcwd(26,895
+
+stddef.h,279
+#define _STDDEF_H2,18
+typedef __PTRDIFF_TYPE__ ptrdiff_t;8,101
+typedef __WCHAR_TYPE__ wchar_t;10,163
+typedef signed long ptrdiff_t;13,208
+typedef int wchar_t;14,239
+#undef NULL17,268
+#define NULL 19,305
+#define NULL 21,326
+#undef offsetof24,356
+#define offsetof(25,372
+
+memcpy.c,14
+memcpy 8,160
+
+iswupper.c,47
+int __iswupper_ascii 4,56
+int iswupper 9,137
+
+fgetc_unlocked.c,43
+int fgetc_unlocked(4,44
+int fgetc(43,948
+
+stdio.h,1302
+#define _STDIO_H2,17
+typedef struct __stdio_file FILE;9,116
+int printf(17,355
+int fprintf(18,437
+int sprintf(19,534
+int snprintf(20,628
+int asprintf(21,736
+int scanf(23,833
+int fscanf(24,913
+int sscanf(25,1008
+int vprintf(27,1107
+int vfprintf(28,1197
+int vsprintf(29,1302
+int vsnprintf(30,1404
+int fdprintf(32,1521
+int vfdprintf(33,1613
+int vscanf(35,1714
+int vsscanf(36,1802
+int vfscanf(37,1908
+#define putc(59,2567
+#define putchar(60,2606
+#define putc_unlocked(61,2641
+#define putchar_unlocked(62,2698
+inline int putc(64,2757
+inline int putc_unlocked(65,2823
+#define getc(69,2941
+#define getchar(70,2976
+#define getc_unlocked(71,3007
+#define getchar_unlocked(72,3060
+inline int getc_unlocked(74,3115
+inline int getchar_unlocked(75,3190
+#define off_t 92,3730
+#define fseeko(93,3751
+#define ftello(94,3801
+#define EOF 129,4768
+#define BUFSIZ 131,4786
+#define _IONBF 133,4806
+#define _IOLBF 134,4823
+#define _IOFBF 135,4840
+#define setbuf(141,5020
+#define setbuffer(142,5092
+#define setlinebuf(143,5170
+inline int setbuf(145,5235
+inline int setbuffer(147,5338
+inline int setlinebuf(149,5455
+#define L_tmpnam 157,5628
+#define P_tmpdir 158,5649
+#define FILENAME_MAX 164,5845
+#define FOPEN_MAX 165,5876
+#define TMP_MAX 167,5898
+#define L_ctermid 170,5967
+
+errno_location.c,90
+int *__errno_location(__errno_location3,19
+int *__errno_location(__errno_location4,70
+
+endian.h,570
+#define	_ENDIAN_H2,18
+#define	__LITTLE_ENDIAN	4,37
+#define	__BIG_ENDIAN	5,66
+#undef __mips64__11,172
+#define __BYTE_ORDER	16,293
+#define __FLOAT_WORD_ORDER	17,331
+#define __BYTE_ORDER	21,550
+#define __FLOAT_WORD_ORDER	22,588
+#define __BYTE_ORDER	28,683
+#define __FLOAT_WORD_ORDER	29,718
+#define LITTLE_ENDIAN	32,766
+#define BIG_ENDIAN	33,805
+#define BYTE_ORDER	34,838
+# define __LONG_LONG_PAIR(37,908
+# define __LONG_LONG_PAIR(39,984
+#define __WORDSIZE 44,1213
+#define __WORDSIZE_COMPAT32 48,1318
+#define __WORDSIZE 52,1395
+#define __WORDSIZE 56,1444
+
+iswdigit.c,19
+int iswdigit(3,21
+
+strtok_r.c,29
+char*strtok_r(strtok_r3,21
+
+strncat.c,29
+char *strncat(strncat6,183
+
+isxdigit.c,47
+int __isxdigit_ascii 2,33
+int isxdigit 8,178
+
+fclose.c,45
+int fclose_unlocked(5,64
+int fclose(24,445
+
+ferror.c,44
+int ferror_unlocked(3,24
+int ferror(6,102
+
+wctype.h,333
+#define _WCTYPE_H2,18
+typedef const int32_t* wctrans_t;6,57
+int iswalnum(8,92
+int iswalpha(9,143
+int iswblank(10,194
+int iswcntrl(11,245
+int iswdigit(12,296
+int iswgraph(13,347
+int iswlower(14,398
+int iswprint(15,449
+int iswpunct(16,500
+int iswspace(17,551
+int iswupper(18,602
+int iswxdigit(19,653
+int iswctype(20,705
+
+wcslen.c,20
+size_t wcslen(3,20
+
+ctype.h,447
+#define _CTYPE_H2,17
+extern int isascii 4,35
+extern int isblank 5,92
+extern int isalnum 6,149
+extern int isalpha 7,206
+extern int isdigit 8,263
+extern int isspace 9,320
+extern int isupper 11,378
+extern int islower 12,435
+extern int toascii(14,493
+extern int tolower(15,549
+extern int toupper(16,605
+extern int isprint(18,662
+extern int ispunct(19,718
+extern int iscntrl(20,774
+extern int isxdigit(23,861
+extern int isgraph(25,919
+
+strcpy.c,14
+strcpy 7,159
+
+strtod.c,20
+double strtod(5,60
+
+printf.c,18
+int printf(7,103
+
+vscanf.c,18
+int vscanf(7,103
+
+write.c,49
+ssize_t __attribute__ ((noinline)) write(27,950
+
+strncmp.c,19
+int strncmp(6,176
+
+iswspace.c,47
+int __iswspace_ascii(4,53
+int iswspace(8,140
+
+opendir.c,85
+static int __attribute__ ((noinline)) _opendir(30,955
+DIR *opendir(opendir41,1112
+
+wmemcpy.c,31
+wchar_t *wmemcpy(wmemcpy3,20
+
+isatty.c,17
+int isatty(3,21
+
+strncasecmp.c,23
+int  strncasecmp 4,41
+
+dietfeatures.h,542
+#define _DIETFEATURES_H2,24
+#define WANT_CHARACTER_CLASSES_IN_SCANF8,194
+#define WANT_NULL_PRINTF9,234
+#define WANT_FREAD_OPTIMIZATION20,588
+#define SLASH_PROC_OK23,691
+#define WANT_LD_SO_GDB_SUPPORT35,960
+#define WANT_FASTER_STRING_ROUTINES38,1045
+#define WANT_CRYPT_MD581,2523
+#define WANT_SSP119,4245
+#define CALL_IN_STARTCODE 126,4353
+#define CALL_IN_STARTCODE 128,4394
+#define WANT_SMALL_STRING_ROUTINES132,4469
+#define errno 137,4558
+#define _REENTRANT138,4594
+#define WANT_DYNAMIC145,4734
+#undef WANT_SAFEGUARD149,4832
+
+strtol.c,81
+#define ABS_LONG_MIN 8,126
+#define ABS_LONG_MIN 10,175
+long int strtol(12,216
+
+strcasecmp.c,22
+int  strcasecmp 3,22
+
+fdopen.c,73
+FILE *fdopen_unlocked(fdopen_unlocked7,108
+FILE *fdopen(fdopen15,328
+
+isprint.c,18
+int isprint 4,44
+
+readdir.c,203
+struct vfs_dirent_s29,954
+  uint32_t d_type;31,976
+  size_t d_size;32,995
+  char d_name[d_name33,1012
+static int __attribute__ ((noinline)) _readdir(37,1042
+struct dirent *readdir(readdir48,1231
+
+strncpy.c,82
+#define _POSIX_SOURCE1,0
+#define _XOPEN_SOURCE2,22
+char *strncpy(strncpy9,246
+
+ungetc.c,45
+int ungetc_unlocked(3,24
+int ungetc(12,246
+
+stderr.c,83
+static FILE __stderr 3,24
+FILE *stderr=stderr18,262
+int __fflush_stderr(20,287
+
+strlcpy.c,58
+static char *rcsid rcsid31,1594
+size_t strlcpy(42,1951
+
+fread.c,50
+size_t fread_unlocked(6,83
+size_t fread(69,1671
+
+ispunct.c,45
+int __ispunct_ascii 4,52
+int ispunct 9,152
+
+strdup.c,26
+char *strdup(strdup4,41
+
+__v_printf.c,266
+#define MAX_WIDTH 10,173
+static inline unsigned long skip_to(12,200
+#define A_WRITE(18,347
+#define B_WRITE(19,416
+static const char pad_line[pad_line21,569
+static int write_pad(22,649
+int __v_printf(36,1025
+      union { char*s;s51,1360
+#define s 52,1391
+
+sys_errlist.c,49
+const char * const sys_errlist[sys_errlist3,20
+
+atexit.c,186
+typedef void (*function)function6,85
+#define NUM_ATEXIT	8,118
+static function __atexitlist[__atexitlist10,141
+static int atexit_counter;11,183
+int atexit(13,211
+void exit(23,364
+
+vsscanf.c,121
+struct str_data 7,103
+  unsigned char* str;8,121
+static int sgetc(11,147
+static int sputc(16,262
+int vsscanf(20,345
+
+strtoll.c,56
+long long int strtoll(7,101
+intmax_t strtoimax(29,597
+
+errno_list.c,35
+char *sys_errlist[sys_errlist1,0
+
+md5crypt.c,107
+static char rcsid[rcsid16,623
+static unsigned char itoa64[itoa6424,824
+to64(30,1011
+md5crypt(48,1192
+
+mkdir.c,45
+int __attribute__ ((noinline)) mkdir(26,893
+
+stdout.c,127
+static char __stdout_buf[__stdout_buf3,24
+static FILE __stdout 4,59
+FILE *stdout=stdout19,330
+int __fflush_stdout(21,355
+
+iswgraph.c,47
+int __iswgraph_ascii(4,53
+int iswgraph(8,136
+
+wcsncat.c,23
+wchar_t* wcsncat(3,20
+
+md5.c,332
+static void CopyToLittleEndian 31,1167
+void MD5Init 55,1728
+#define ROTATE_LEFT(65,1999
+#define F(67,2053
+#define G(68,2092
+#define H(69,2131
+#define I(70,2162
+#define FF(72,2197
+#define GG(73,2315
+#define HH(74,2433
+#define II(75,2551
+static void __MD5Transform 77,2670
+void MD5Update 181,7044
+void MD5Final 215,8011
+
+memchr.c,19
+void* memchr(5,71
+
+regex.h,1045
+#define _REGEX_H2,17
+typedef ptrdiff_t regoff_t;7,75
+  regoff_t rm_so;10,121
+  regoff_t rm_eo;11,139
+} regmatch_t;12,157
+#define REG_EXTENDED 14,172
+#define REG_ICASE 15,195
+#define REG_NOSUB 16,215
+#define REG_NEWLINE 17,235
+#define REG_NOTBOL 19,258
+#define REG_NOTEOL 20,279
+#define REG_NOMATCH 22,301
+#define RE_DUP_MAX 24,325
+typedef int (*matcher)matcher28,369
+typedef struct __regex_t 30,461
+  struct regex 31,488
+    matcher m;32,505
+    void* next;33,520
+    int pieces;34,536
+    int num;35,552
+    struct branch* b;36,565
+  } r;37,587
+  int brackets,38,594
+  int brackets,cflags;38,594
+  regmatch_t* l;39,617
+} regex_t;40,634
+#define re_nsub 41,645
+enum __regex_errors 48,947
+  REG_NOERROR,49,969
+  REG_BADRPT,50,984
+  REG_BADBR,51,1082
+  REG_EBRACE,52,1141
+  REG_EBRACK,53,1198
+  REG_ERANGE,54,1253
+  REG_ECTYPE,56,1385
+  REG_ECOLLATE,57,1435
+  REG_EPAREN,58,1484
+  REG_ESUBREG,59,1544
+  REG_EEND,60,1608
+  REG_EESCAPE,61,1679
+  REG_BADPAT,62,1720
+  REG_ESIZE,63,1796
+  REG_ESPACE 65,1928
+
+iswcntrl.c,47
+int __iswcntrl_ascii(4,53
+int iswcntrl(8,135
+
+malloc.c,114
+void * __attribute__ ((noinline)) malloc 30,1010
+void free(40,1165
+void* realloc(44,1191
+void* calloc(72,1581
+
+wcrtomb.c,53
+static mbstate_t internal;4,44
+size_t wcrtomb(6,72
+
+crt0.c,74
+int errno 28,957
+void __attribute__ ((section (".init"))) _start(30,973
+
+strspn.c,20
+size_t strspn(4,40
+
+bsearch.c,28
+void *bsearch(bsearch4,41
+
+unistd.h,455
+#define _UNISTD_H_23,847
+#define O_APPEND 27,887
+#define O_RDONLY 28,917
+#define O_WRONLY 29,947
+#define O_RDWR 30,977
+#define O_CREAT 31,1007
+#define O_EXCL 32,1037
+#define O_TRUNC 33,1067
+#define SEEK_SET 35,1089
+#define SEEK_CUR 36,1110
+#define SEEK_END 37,1131
+#define STDIN_FILENO 39,1153
+#define STDOUT_FILENO 40,1176
+#define STDERR_FILENO 41,1200
+static char __buff_[__buff_64,1764
+#define log_msg(65,1790
+#define log_msg(71,1943
+
+stdin.c,148
+static char __stdin_buf[__stdin_buf4,44
+static FILE __stdin 5,78
+int __stdin_is_tty(20,355
+FILE *stdin=stdin26,454
+int __fflush_stdin(28,477
+
+mbrlen.c,52
+static mbstate_t internal;4,39
+size_t mbrlen(6,67
+
+strlcat.c,58
+static char *rcsid rcsid31,1594
+size_t strlcat(44,2044
+
+iswxdigit.c,50
+int __iswxdigit_ascii(4,54
+int iswxdigit(10,196
+
+fgetpos.c,18
+int fgetpos(3,20
+
+closedir.c,78
+static int __attribute__ ((noinline)) _closedir(26,895
+int closedir(36,1056
+
+vsnprintf.c,133
+struct str_data 8,123
+  char* str;9,141
+  size_t len;10,154
+  size_t size;11,168
+static int swrite(14,187
+int vsnprintf(28,481
+
+llabs.c,26
+long long int llabs(5,62
+
+towupper.c,22
+wint_t towupper(3,21
+
+isalpha.c,18
+int isalpha(3,20
+
+iswlower.c,47
+int __iswlower_ascii(4,53
+int iswlower 8,130
+
+__v_scanf.c,68
+#define A_GETC(12,194
+#define A_PUTC(13,250
+int __v_scanf(15,313
+
+vfprintf.c,48
+static int __fwrite(7,103
+int vfprintf(11,193
+
+fflush.c,190
+FILE *__stdio_root __stdio_root7,109
+int __stdio_atexit=9,137
+int fflush(11,160
+void __stdio_flushall(13,234
+int fflush_unlocked(18,350
+int __fflush4(48,996
+int __stdio_outs(65,1494
+
+sscanf.c,17
+int sscanf(4,40
+
+mbsinit.c,18
+int mbsinit(3,20
+
+lldiv.c,44
+#define _GNU_SOURCE1,0
+lldiv_t lldiv(4,41
+
+strpbrk.c,28
+char *strpbrk(strpbrk4,40
+
+wcscpy.c,22
+wchar_t* wcscpy(3,20
+
+mkfifo.c,19
+int mkfifo(26,893
+
+clock.c,22
+clock_t clock(28,931
+
+mblen.c,16
+int mblen(4,40
+
+vfdprintf.c,49
+static int __fwrite(7,103
+int vfdprintf(11,190
+
+wcsrchr.c,23
+wchar_t* wcsrchr(3,20
+
+fscanf.c,18
+int fscanf(7,103
+
+fsetpos.c,18
+int fsetpos(4,40
+
+memccpy.c,81
+#define _POSIX_SOURCE1,0
+#define _XOPEN_SOURCE2,22
+void *memccpy(memccpy6,84
+
+memrchr.c,44
+#define _GNU_SOURCE1,0
+void* memrchr(5,60
+
+atoll.c,26
+long long int atoll(6,81
+
+isascii.c,18
+int isascii 3,20
+
+feof.c,40
+int feof_unlocked(3,24
+int feof(8,148
+
+rx.c,2439
+#define NDEBUG1,0
+#undef WANT_REGEX_JIT11,178
+struct bracketed 34,1263
+  unsigned int cc[cc35,1282
+struct string 47,1431
+  char* s;48,1447
+  size_t len;49,1458
+struct atom 52,1476
+  matcher m;53,1490
+  void* next;54,1503
+  enum { ILLEGAL,55,1517
+  enum { ILLEGAL, EMPTY,55,1517
+  enum { ILLEGAL, EMPTY, REGEX,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART, WORDEND,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART, WORDEND, CHAR,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART, WORDEND, CHAR, STRING,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART, WORDEND, CHAR, STRING, BACKREF,55,1517
+  enum { ILLEGAL, EMPTY, REGEX, BRACKET, ANY, LINESTART, LINEEND, WORDSTART, WORDEND, CHAR, STRING, BACKREF, } type;55,1517
+  int bnum;56,1634
+    struct regex r;58,1656
+    struct bracketed b;59,1676
+    char c;60,1700
+    struct string s;61,1712
+  } u;62,1733
+struct piece 65,1744
+  matcher m;66,1759
+  void* next;67,1772
+  struct atom a;68,1786
+  unsigned int min,69,1803
+  unsigned int min,max;69,1803
+struct branch 72,1831
+  matcher m;73,1847
+  void* next;74,1860
+  int num;75,1874
+  struct piece *p;p76,1885
+static void clearcc(79,1908
+static void setcc(83,1990
+static int issetcc(87,2079
+static const char* parsebracketed(91,2177
+static int matchatom_CHAR(113,2816
+static int matchatom_CHAR_ICASE(125,3257
+static int matchatom(137,3719
+static const char* parseatom(246,6822
+static int matchpiece(323,8502
+static const char* parsepiece(368,10013
+static int matchbranch(398,10804
+static int matchempty(416,11360
+static const char* parsebranch(420,11509
+static int matchregex(454,12440
+static const char* parseregex(473,13000
+static void atom_putnext(515,14188
+static void piece_putnext(521,14337
+static void branch_putnext(526,14464
+static void regex_putnext(541,14883
+int regcomp(550,15055
+int regexec(559,15300
+static void __regfree(584,16208
+void regfree(599,16529
+size_t regerror(604,16619
+int main(613,16834
+
+read.c,48
+ssize_t __attribute__ ((noinline)) read 27,950
+
+scanf.c,17
+int scanf(7,103
+
+strings.h,149
+#define _STRINGS_H2,19
+int ffs(9,187
+#define bzero(12,232
+#define bcopy(13,265
+#define bcmp(14,311
+#define index(15,345
+#define rindex(16,376
+
+strsep.c,26
+char *strsep(strsep3,21
+
+dietwarning.h,85
+#define link_warning(7,79
+#define link_warning(12,202
+#define link_warning(21,318
+
+mkstemp.c,46
+#define O_NOFOLLOW 9,144
+int mkstemp(12,173
+
+fdglue.c,31
+int __stdio_parse_mode(10,154

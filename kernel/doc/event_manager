@@ -1,0 +1,18 @@
+Two type of event local and remote
+
+1) locals are used by the periphs to postopone their work
+
+2) remote are used to ask a work to done by another cluster. The users are:
+	- sys_fork.c
+	- kern/sys_thread_create.c
+	- kern/thread_create.c
+	- kern/thread_migrate.c
+
+	- mm/vmm.c : vmm_broadcast_inval Never used!!
+	- cluster.C : cluster_do_key_op Never used!!
+
+do_syscall & schedule notify the events 
+also done by the thread manager (which is waked up by do_interrrupt) and thread idle 
+
+
+

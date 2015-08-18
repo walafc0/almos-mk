@@ -1,0 +1,6 @@
+/////////////////////////////////////////////////////////////////////////////
+// This library is part of ALMOS operating system. The source code of this //
+// library is almost taken from the dietlibc project [1]. It was adapted   //
+// and completed to run with the kernel of ALMOS, as well as with other    //
+// user-land libraries (e.g. libpthread). [1] http://www.fefe.de/dietlibc  //
+/////////////////////////////////////////////////////////////////////////////

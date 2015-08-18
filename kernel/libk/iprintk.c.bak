@@ -1,0 +1,259 @@
+/*
+   This file is part of MutekP.
+  
+   MutekP is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+  
+   MutekP is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+  
+   You should have received a copy of the GNU General Public License
+   along with MutekP; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+  
+   UPMC / LIP6 / SOC (c) 2007
+*/
+
+/* 
+   revision 1.2.2 2011/07/12 11:08:34 Ghassan
+    - Split main loop into 3 noinline functions: compute_dec32, compute_dec64, compute_hex 
+    - Use bigger buffer size
+    - Reuse buffer treatment
+    - Add 64 bits support
+    - Add char count;
+    
+   revision 1.2.1 2007/11/11 18:54:23 Ghassan
+   rename iprintf to __iprintk, it's a copy of iprintf called on system level.
+   
+   stdio of the ghost of libc
+   Developped by Denis Hommais and Frédéric Pétrot
+   $Log: iprintf.c,v $
+   Revision 1.2  2003/07/01 13:40:46  fred
+   Supports the %u and doesnt core anymore on an unrecognized char
+   following a %
+  
+   Revision 1.1.1.1  2002/02/28 12:58:56  disydent
+   Creation of Disydent CVS Tree
+  
+   Revision 1.1  2001/11/22 15:07:36  fred
+   Adding the iprintf function that does the formatting, and removes all
+   the old stuff hanging around.
+  
+   $Id: iprintf.c,v 1.2 2003/07/01 13:40:46 fred Exp $
+   Made up this file to centralize the printf behavior
+*/
+
+#include <stdarg.h>
+#include <types.h>
+#include <libk.h>
+
+/* Handling of the printf internals
+ * Addr is either the buffer or the tty addrs
+ * inc is 0 for a tty and 1 for a buffer
+ * Other arguments are self explanatory
+ */
+
+#define SIZE_OF_BUF 20
+
+static char* __attribute__((noinline)) compute_dec64(char **addr,
+						     char *buf, 
+						     int inc, 
+						     uint64_t val, 
+						     bool_t isSigned)
+{
+  register int64_t sval;
+  register uint32_t uval;
+  register char *tmp;
+  register uint_t count;
+  register uint_t i;
+
+  if(isSigned == true)
+  {
+    sval = val;
+    if(sval < 0)
+    {
+      sval = -sval;
+      val = sval;
+      **addr = '-';
+      (*addr) += inc;
+    }
+  }
+
+  count = 0;
+  i = 0;
+  tmp = buf + SIZE_OF_BUF;
+  *--tmp = '\0';
+  
+  while(val >= 1000000000UL)
+  {
+    val -= 1000000000UL;
+    count ++;
+  }
+
+  uval = (uint32_t) val;
+
+  do
+  {
+    *--tmp = (uval % 10) + '0';
+    uval /= 10;
+    i++;
+  }while((uval) || (i < 9));
+  
+  uval = count;
+
+  do
+  {
+    *--tmp = (uval % 10) + '0';
+    uval /= 10;
+  }while(uval);
+
+  return tmp;
+}
+
+static char* __attribute__((noinline)) compute_dec(char **addr,
+						   char *buf, 
+						   int inc, 
+						   uint_t val, 
+						   bool_t isSigned)
+{
+  register sint_t sval;
+  register char *tmp;
+
+  if(isSigned == true)
+  {
+    sval = val;
+    if(sval < 0)
+    {
+      sval = -sval;
+      val = sval;
+      **addr = '-';
+      (*addr) += inc;
+    }
+  }
+
+  tmp = buf + SIZE_OF_BUF;
+  *--tmp = '\0';
+
+  do
+  {
+    *--tmp = (val % 10) + '0';
+    val /= 10;
+  }while (val);
+
+  return tmp;
+}
+
+static char* __attribute__((noinline)) compute_hex(char **addr, 
+						   char *buf, 
+						   uint_t val, 
+						   bool_t isPointer)
+{
+  register char *tmp;
+  register char *xdigit;
+  register uint_t i;
+
+  i = 0;
+  xdigit = "0123456789abcdef";
+  tmp = buf + SIZE_OF_BUF;
+  *--tmp = '\0';
+
+  do
+  {
+    *--tmp = xdigit[val & 15];
+    val = val >> 4;
+    i++;
+  }while (val);
+
+  if(isPointer)
+  {
+    while (i < 8)
+    {
+      *--tmp = xdigit[0];
+      i++;
+    }
+  }
+
+  return tmp;
+}
+
+int iprintk (char *addr, int inc, const char *fmt, va_list ap)
+{
+   char *tmp;
+   sint_t val;
+   uint_t uval;
+   uint_t count = 0;
+   char buf[SIZE_OF_BUF];
+
+   while (*fmt)
+   {
+      while ((*fmt != '%') && (*fmt))
+      {
+	*addr = *fmt++;
+         addr += inc;
+         count++;
+      }
+      if (*fmt)
+      {
+         fmt++;
+         switch (*fmt)
+         {
+         case '%':
+            *addr = '%';
+            addr += inc;
+            count++;
+            goto next;
+         case 'c':
+            *addr = va_arg (ap, uint_t);
+            addr += inc;
+            count++;
+            goto next;
+         case 'd':
+	    count ++;
+	    val = va_arg (ap, sint_t);
+	    tmp = compute_dec(&addr, &buf[0], inc, val, true); 
+            break;
+         case 'u':
+	    uval = va_arg (ap, uint_t);
+	    tmp = compute_dec(&addr, &buf[0], inc, uval, false); 
+            break;
+	 case 'D':
+	    count ++;
+	    val = va_arg (ap, int64_t);
+	    tmp = compute_dec64(&addr, &buf[0], inc, val, true); 
+	    break;
+	 case 'U':
+            uval = va_arg (ap, uint64_t);
+	    tmp = compute_dec64(&addr, &buf[0], inc, uval, false); 
+            break;
+         case 's':
+	    tmp = va_arg (ap, char *);
+            if (!tmp)
+               tmp = "empty str";
+            break;
+         case 'p':
+         case 'x':
+	   uval = va_arg (ap, uint_t);
+	   tmp = compute_hex(&addr, &buf[0], uval, (*fmt == 'p') ? true : false);
+	   break;
+         default:
+            *addr = *fmt;
+            count++;
+            goto next;
+         }
+         while (*tmp)
+         {
+            *addr = *tmp++;
+            addr += inc;
+            count++;
+         }
+       next:
+         fmt++;
+      }
+   }
+   va_end (ap);
+   return count;
+}

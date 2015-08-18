@@ -1,0 +1,44 @@
+TODO:
+(- Mesuring RPC: * Fix the ISR of IPCs) almost done
+
+- There is to function for the same purpose : ppm_ppn2vma and pmm_ppn2vma (ppm != pmm) !!!
+	Only the second that support any ppn, the first support only local ppn!
+
+- Fix print exception output
+
+- lock boot_dmsg
+
+- RPC: check the sending of chars 
+
+- cpu-remote.h: avoid disabling irqs...
+
+- optimimize memcpy and remote_memcpy in case of not aligned copy ?
+
+
+
+
+- Make the com. algorithm independent of the hardware (no coherence, no shared mem... see multi kernel)
+
+- FIX: void pmm_cache_flush_raddr func
+- chech/give a type for addresse in a cluster, don't transport adresses using uint_t
+
+-REmote tread create: see fixmes in sys_thread_creat, task.c
+
+-FIXME: rename as cpu_strlen_uspace
+
+-FIXME: if we send an empty path (not a NULL but an empty path) to the chdir syscall what will happen (what errror ro return) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+TOEXPLORE:
+- alarm manager could be ameliorated with relative time techinique rather than moving all the alarms at a new alamr ?

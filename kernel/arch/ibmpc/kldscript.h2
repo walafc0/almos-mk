@@ -1,0 +1,57 @@
+/*OUTPUT_FORMAT("binary")*/
+ENTRY(_start)
+phys = 0x00100000;
+SECTIONS
+{
+  .text phys : AT(phys) {
+    code = .;
+    *(.boot)
+    *(.text)
+    _ecode = .;
+    . = ALIGN(4096);
+  }
+
+  .eh_frame : AT(phys + (_eh_frame - code))
+  {
+    _eh_frame = .;
+    *(.rodata*)
+    *(.data)
+    . = ALIGN(4096);
+  }
+
+  .data : AT(phys + (data - code))
+  {
+    data = .;
+    *(.rodata*)
+    *(.data)
+    . = ALIGN(4096);
+  }
+
+  .bss : AT(phys + (bss - code))
+  {
+    bss = .;
+    *(.bss)
+    . = ALIGN(4096);
+  }
+  _edata = .;
+  _end = .;
+
+  .comment : AT(phys + (_comment - code))
+  {
+    _comment = .;
+    *(.comment*)
+  }
+
+  .stab : AT(phys + (_stab - code))
+  {
+    _stab = .;
+    *(.stab*)
+  }
+
+  .stabstr : AT(phys + (_stabstr - code))
+  {
+    _stabstr = .;
+    *(.stabstr*)
+  }
+}
+/*INPUT(__do_syscall.o)*/

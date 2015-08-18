@@ -1,0 +1,3 @@
+There's one gloabal table that index all process by pid.
+Replicaing the kernel will also replicate this structure...
+The 

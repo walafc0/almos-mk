@@ -1,0 +1,32 @@
+vaddr = 0x00004000;		/* see arch/tsar/arch-config.h */
+
+ENTRY(_start)
+
+SECTIONS
+{
+  .text vaddr : { 
+    *(.init) 
+    *(.text) 
+    . = ALIGN(16*4096); 
+    __text_end = .;
+  }
+ 
+ . = ALIGN(2*1024*1024);
+ 
+ .data : { 
+    *(.rodata*) 
+      *(.eh_frame) 
+      *(.data) 
+      *(.sdata) 
+      . = ALIGN(4); 
+    __bss_start = .; 
+    *(.sbss) 
+      *(.scommon) 
+      *(.bss) 
+      *(COMMON) 
+      . = ALIGN(16*4096);
+    __bss_end = .;
+  }
+}
+
+INPUT(crt0.o)
